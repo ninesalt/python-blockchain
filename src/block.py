@@ -4,25 +4,27 @@ from hashlib import sha256
 
 class Block:
 
-    def __init__(self, data, previousblock):
+    def __init__(self, data, prevblockhash=None):
 
-        timestamp = str(int(time()))
+        self.timestamp = str(int(time()))
+        self.data = data
+        self.prevblockhash = prevblockhash
+
+    def hashblock(self, nonce):
 
         s = sha256()
-        s.update(timestamp.encode())
-        s.update(data.encode())
+        s.update(self.timestamp.encode())
+        s.update(self.data.encode())
 
-        if previousblock is None:
+        # if genesis block
+        if self.prevblockhash is None:
             s.update(bytes())
-            self.previousblockhash = None
         else:
-            s.update(previousblock.hash.encode())
-            self.previousblockhash = previousblock.hash
+            s.update(str(self.prevblockhash).encode())
 
-        self.timestamp = timestamp
-        self.data = data
-        self.hash = s.hexdigest()
+        s.update(str(nonce).encode())
+        return s.hexdigest()
 
 
 def createGenesisBlock():
-    return Block("block 0", None)
+    return Block("block 0")
