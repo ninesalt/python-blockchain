@@ -1,5 +1,4 @@
-from hashlib import sha256
-from block import *
+import block
 from time import sleep
 
 

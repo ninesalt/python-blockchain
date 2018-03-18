@@ -1,12 +1,12 @@
 from time import time
-from block import *
+from block import Block
 from pow import pow
 
 
 class Blockchain():
 
     def __init__(self):
-        genesisblock = createGenesisBlock()
+        genesisblock = Block("block 0")
         self.blocks = [genesisblock]
 
     def getLastBlock(self):

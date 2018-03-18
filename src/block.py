@@ -24,7 +24,3 @@ class Block:
 
         s.update(str(nonce).encode())
         return s.hexdigest()
-
-
-def createGenesisBlock():
-    return Block("block 0")
