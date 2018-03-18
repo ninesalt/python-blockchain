@@ -8,22 +8,19 @@ b = Blockchain()
 # create a network of miners
 n = Network()
 
-c1 = Client("client 1")
-c2 = Client("client 2")
-c3 = Client("client 3")
-
-# add clients to the network
-n.add_client(c1)
-n.add_client(c2)
-n.add_client(c3)
+# add some miners to the network
+nodes = 5
+for i in range(1, nodes+1):
+    c = Client("Client #{}".format(i))
+    n.add_client(c)
 
 # broadcast a series of transactions
-num = 5
+num = 7
 for i in range(1, num+1):
     t = "this is transaction #{}".format(i)
     b.addBlock(n.broadcast_transaction(t, b.getLastBlock()))
 
 # print summary of clients
-print('\n ---- Node Summary ----')
+print('\n -------- Node Summary -------')
 for c in n.get_clients():
     print("\n {} reward: {} \n power: {}".format(c.name, c.reward, c.power))

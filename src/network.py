@@ -1,5 +1,5 @@
 from random import sample, randint
-from threading import Thread
+from threading import Thread, Event
 from queue import Queue
 
 
@@ -17,13 +17,12 @@ class Network:
     # choose random miners to broadcast the transaction to
     def broadcast_transaction(self, txdata, lastblock):
 
-        # chosen = sample(self.clients, randint(1, len(self.clients)))
-        chosen = self.clients
+        chosen = sample(self.clients, randint(1, len(self.clients)))
         q = Queue()
-        mined = False
 
         # to simulate concurrent mining, each client will get their own thread
         # and when one of them finds a correct nonce, the others will stop
+        mined = Event()
 
         for client in chosen:
             Thread(target=client.mine, args=(

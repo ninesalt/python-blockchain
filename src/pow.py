@@ -3,14 +3,14 @@ from block import *
 from time import sleep
 
 
-def pow(block, power, mined):
+def pow(block, power):
 
     nonce = 0
-    difficulty = 2
+    difficulty = 5
     sleep(1/power)
     proof = block.hashblock(nonce)
 
-    while not mined and proof[: difficulty] != "0" * difficulty:
+    while proof[: difficulty] != "0" * difficulty:
         nonce += 1
         proof = block.hashblock(nonce)
 
