@@ -11,11 +11,8 @@ class Blockchain():
     def getLastBlock(self):
         return self.blocks[-1]
 
-    def addBlock(self, data):
+    def addBlock(self, block):
+        self.blocks.append(block)
 
-        newblock = Block(data, self.getLastBlock())
-        newblock.nonce, newblock.hash = pow(newblock)
-        self.blocks.append(newblock)
-
-        print("\n Added block #{} \n Nonce: {} \n Hash {}".format(
-            len(self.blocks), newblock.nonce, newblock.hash))
+        print("\n Added block #{} \n Nonce: {} \n Hash {} \n Mined by: {} \n Timestamp: {}".format(
+            len(self.blocks), block.nonce, block.hash, block.miner, block.timestamp))
