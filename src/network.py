@@ -20,11 +20,13 @@ class Network:
         # chosen = sample(self.clients, randint(1, len(self.clients)))
         chosen = self.clients
         q = Queue()
+        mined = False
 
         # to simulate concurrent mining, each client will get their own thread
         # and when one of them finds a correct nonce, the others will stop
 
         for client in chosen:
-            Thread(target=client.mine, args=(txdata, lastblock, q)).start()
+            Thread(target=client.mine, args=(
+                txdata, lastblock, q, mined)).start()
 
         return q.get()

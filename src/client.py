@@ -13,10 +13,11 @@ class Client:
     def get_reward(self):
         return self.reward
 
-    def mine(self, data, lastblock, queue):
+    def mine(self, data, lastblock, queue, mined):
 
         newblock = Block(data, lastblock)
-        newblock.nonce, newblock.hash = pow(newblock, self.power)
+        newblock.nonce, newblock.hash = pow(newblock, self.power, mined)
+        mined = True
         newblock.miner = self.name
         self.reward += 5
 
