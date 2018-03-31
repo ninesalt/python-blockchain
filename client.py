@@ -6,10 +6,11 @@ import rsa
 
 class Client:
 
-    def __init__(self, name):
+    def __init__(self, name, blockchain):
         self.name = name
         self.reward = 0
         self.power = randint(1, 30)  # mimics variations in hashing power
+        self.blockchain = blockchain
 
         (pubkey, privkey) = rsa.newkeys(512)
         self.pubkey = pubkey
@@ -30,6 +31,8 @@ class Client:
             newblock.miner = self.name
             self.reward += 5
             queue.put(newblock)
+
+        # self.blockchain.addBlock(newblock)
 
         # set mined event and stop all other threads
         mined.set()

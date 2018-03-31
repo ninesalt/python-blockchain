@@ -14,7 +14,7 @@ nodes = 5
 clients = []
 
 for i in range(1, nodes+1):
-    c = Client("Client #{}".format(i))
+    c = Client("Client #{}".format(i), b)
     clients.append(c)
     n.add_client(c)
 
@@ -25,8 +25,10 @@ for i in range(1, num+1):
     t = "this is transaction #{}".format(i)
     sender = choice(clients)
     transaction = sender.create_transaction(t)
+    block = n.broadcast_transaction(transaction, b.getLastBlock())
 
-    b.addBlock(n.broadcast_transaction(transaction, b.getLastBlock()))
+    b.addBlock(block)
+    sender.blockchain.addBlock(block)
 
 # print summary of clients
 print('\n -------- Node Summary -------')
