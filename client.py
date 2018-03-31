@@ -1,6 +1,7 @@
 from block import Block
 from random import randint
 from pow import pow
+import rsa
 
 
 class Client:
@@ -9,6 +10,15 @@ class Client:
         self.name = name
         self.reward = 0
         self.power = randint(1, 30)  # mimics variations in hashing power
+
+        (pubkey, privkey) = rsa.newkeys(512)
+        self.pubkey = pubkey
+        self.privkey = privkey
+
+    # create a transaction and sign it with the private key
+    def create_transaction(self, data):
+        data = data.encode('utf8')
+        return rsa.sign(data, self.privkey, 'SHA-1')
 
     def mine(self, data, lastblock, queue, mined):
 

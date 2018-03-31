@@ -14,7 +14,7 @@ class Block:
 
         s = sha256()
         s.update(self.timestamp.encode())
-        s.update(self.data.encode())
+        s.update(self.data)
 
         # if genesis block
         if self.prevblockhash is None:
