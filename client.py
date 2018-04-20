@@ -30,9 +30,8 @@ class Client:
         if not mined.is_set():
             newblock.miner = self.name
             self.reward += 5
+            self.blockchain.addBlock(newblock)
             queue.put(newblock)
-
-        # self.blockchain.addBlock(newblock)
 
         # set mined event and stop all other threads
         mined.set()

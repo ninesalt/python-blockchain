@@ -5,7 +5,7 @@ from time import sleep
 def pow(block, power):
 
     nonce = 0
-    difficulty = 5
+    difficulty = 3
     sleep(1/power)
     proof = block.hashblock(nonce)
 
