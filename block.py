@@ -1,26 +1,29 @@
-from time import time
-from hashlib import sha256
+import datetime
+import hashlib
 
 
 class Block:
+    blockNo = 0
+    data = None
+    next = None
+    hashB = None
+    nonce = 0
+    previous_hash = 0x0
+    timestamp = datetime.datetime.now()
 
-    def __init__(self, data, prevblockhash=None):
-
-        self.timestamp = str(int(time()))
+    def __init__(self, data):
         self.data = data
-        self.prevblockhash = prevblockhash
 
-    def hashblock(self, nonce):
+    def hash(self):
+        h = hashlib.sha256()
+        h.update(
+        str(self.nonce).encode('utf-8') +
+        str(self.data).encode('utf-8') +
+        str(self.previous_hash).encode('utf-8') +
+        str(self.timestamp).encode('utf-8') +
+        str(self.blockNo).encode('utf-8')
+        )
+        return h.hexdigest()
 
-        s = sha256()
-        s.update(self.timestamp.encode())
-        s.update(self.data)
-
-        # if genesis block
-        if self.prevblockhash is None:
-            s.update(bytes())
-        else:
-            s.update(str(self.prevblockhash).encode())
-
-        s.update(str(nonce).encode())
-        return s.hexdigest()
+    def __str__(self):
+        return "Block Hash: " + str(self.hash()) + "\nBlockNo: " + str(self.blockNo) + "\nBlock Data: " + str(self.data) + "\nHashes: " + str(self.nonce) + "\n--------------"
