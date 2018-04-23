@@ -22,15 +22,15 @@ for i in range(1, nodes+1):
 n.print_network()
 
 # broadcast a series of transactions
-num = 7
+num = 10
 for i in range(1, num+1):
 
     t = "this is transaction #{}".format(i)
     sender = choice(clients)
     transaction = sender.create_transaction(t)
-    block = n.broadcast_transaction(transaction, b.getLastBlock())
+    n.broadcast_transaction(transaction, b.getLastBlock())
 
-    b.addBlock(block)
+    # b.addBlock(block)
 
 # print summary of clients
 print('\n -------- Node Summary -------')

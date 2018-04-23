@@ -26,12 +26,24 @@ class Network:
         self.clients.append(client)
 
     # get all peers indrectly connected (this well get all clients?)
+
     def get_connections(self, client):
-        history = set()
+
+        connections = self.graph[client]
+
+        for c in self.clients:
+            if c not in connections:
+                connections.append(c)
+
+        return connections
+
+    def broadcast_block(self, block):
+        for client in self.clients:
+            client.receieveblock(block)
 
     def print_network(self):
 
-        print('Network connections \n')
+        print('\nNetwork connections \n')
 
         for key, values in self.graph.items():
             connections = [c.name for c in values]
@@ -45,8 +57,7 @@ class Network:
     def broadcast_transaction(self, txdata, lastblock):
 
         # chosen = sample(self.clients, randint(1, len(self.clients)))
-        chosen = choice(self.clients)
-
+        chosen = self.get_connections(choice(self.clients))
         q = Queue()
 
         # to simulate concurrent mining, each client will get their own thread
@@ -54,7 +65,9 @@ class Network:
         mined = Event()
 
         for client in chosen:
-            Thread(target=client.mine, args=(
+            Thread(target=client.receivetransaction, args=(
                 txdata, lastblock, q, mined)).start()
 
-        return q.get()
+        newblock = q.get()
+        # self.broadcast_block(newblock)
+        return newblock
