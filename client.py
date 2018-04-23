@@ -50,9 +50,10 @@ class Client:
 
         else:  # invalid last block hash, check cache and swap if necessary
             for b in self.cache:
-                if b.prevblockhash == block.hash:
+                if block.prevblockhash == b.hash:
                     self.blockchain[-1] = b
                     self.blockchain.append(block)
+                    break
 
     def mine(self, data, lastblock, queue, mined):
 
