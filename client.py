@@ -36,23 +36,23 @@ class Client:
     def receiveblock(self, block):
 
         # if the block can be added now
-        if block.prevblockhash == self.blockchain[-1].hash:
+        if block.prevblockhash == self.blockchain.blocks[-1].hash:
 
             # no blocks in cache, add right to chain right away
             if len(self.cache) == 0:
-                self.blockchain.append(block)
+                self.blockchain.blocks.append(block)
 
             else:  # choose a random block from the cache
                 self.cache.append(block)
                 chosen = choice(self.cache)
                 self.cache.remove(chosen)
-                self.blockchain.append(chosen)
+                self.blockchain.blocks.append(chosen)
 
         else:  # invalid last block hash, check cache and swap if necessary
             for b in self.cache:
                 if block.prevblockhash == b.hash:
-                    self.blockchain[-1] = b
-                    self.blockchain.append(block)
+                    self.blockchain.blocks[-1] = b
+                    self.blockchain.blocks.append(block)
                     break
 
     def mine(self, data, lastblock, queue, mined):

@@ -28,7 +28,8 @@ for i in range(1, num+1):
     t = "this is transaction #{}".format(i)
     sender = choice(clients)
     transaction = sender.create_transaction(t)
-    n.broadcast_transaction(transaction, b.getLastBlock())
+    block = n.broadcast_transaction(
+        transaction, sender.blockchain.getLastBlock())
 
     # b.addBlock(block)
 

@@ -7,6 +7,7 @@ class Blockchain():
 
     def __init__(self):
         genesisblock = Block("block 0")
+        genesisblock.nonce, genesisblock.hash = pow(genesisblock, 30)
         self.blocks = [genesisblock]
 
     def getLastBlock(self):

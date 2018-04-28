@@ -25,8 +25,6 @@ class Network:
 
         self.clients.append(client)
 
-    # get all peers indrectly connected (this well get all clients?)
-
     def get_connections(self, client):
 
         connections = self.graph[client]
@@ -39,7 +37,7 @@ class Network:
 
     def broadcast_block(self, block):
         for client in self.clients:
-            client.receieveblock(block)
+            client.receiveblock(block)
 
     def print_network(self):
 
@@ -69,5 +67,5 @@ class Network:
                 txdata, lastblock, q, mined)).start()
 
         newblock = q.get()
-        # self.broadcast_block(newblock)
+        self.broadcast_block(newblock)
         return newblock
